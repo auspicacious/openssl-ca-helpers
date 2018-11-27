@@ -9,6 +9,8 @@ textfile="$1"
 signing_cert="$2"
 signing_private_key="$3"
 
+# https://stackoverflow.com/questions/35443847/how-to-create-detached-cms-signature
+
 write_passphrase() {
     pass private/ca/openvpn/client
 }
