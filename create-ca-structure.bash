@@ -11,8 +11,7 @@ root_name="akmanrootca1"
 sub_name="akmansubca1"
 
 base_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd -P )"
-root_ini_template="$base_dir"/root-ca.template.ini
-sub_ini_template="$base_dir"/sub-ca.template.ini
+ca_ini_template="$base_dir"/ca.template.ini
 
 out_dir="$base_dir"/out
 
@@ -31,7 +30,7 @@ sub_db_dir="$sub_ca_dir"/db
 sub_private_dir="$sub_ca_dir"/private
 
 sub_private_key="$sub_private_dir"/"$sub_name".key
-sub_cert="$sub_certs_dir"/"$sub_name".crt
+vsub_cert="$sub_certs_dir"/"$sub_name".crt
 sub_ini="$sub_ca_dir"/sub-ca.ini
 
 root_ca_csr="$(mktemp rootcsr.XXXXXX)"
@@ -93,10 +92,23 @@ sign_sub_ca() {
 }
 
 populate_templates() {
-    cp "$root_ca_template" "$root_ini"
+    cp "$ca_ini_template" "$root_ini"
     sed --in-place \
-        -e 's:@@home@@:'"$out_dir"':' \
+        -e 's:@@name@@:'"$root_name"':' \
+        -e 's:@@home@@:'"$root_ca_dir"':' \
+        -e 's:@@ocsp_portnum@@:'"9080"':' \
+        -e 's:@@copy_extensions@@:'"none"':' \
+        -e 's:@@default_crl_days@@:'"365"':' \
         "$root_ini"
+
+    cp "$ca_ini_template" "$sub_ini"
+    sed --in-place \
+        -e 's:@@name@@:'"$sub_name"':' \
+        -e 's:@@home@@:'"$sub_ca_dir"':' \
+        -e 's:@@ocsp_portnum@@:'"9081"':' \
+        -e 's:@@copy_extensions@@:'"copy"':' \
+        -e 's:@@default_crl_days@@:'"30"':' \
+        "$sub_ini"
 }
 
 make_ca_dirs() {
