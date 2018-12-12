@@ -97,8 +97,10 @@ populate_templates() {
         -e 's:@@name@@:'"$root_name"':' \
         -e 's:@@home@@:'"$root_ca_dir"':' \
         -e 's:@@ocsp_portnum@@:'"9080"':' \
+        -e 's:@@req_extensions@@:'"ca_ext"':' \
         -e 's:@@copy_extensions@@:'"none"':' \
         -e 's:@@default_crl_days@@:'"365"':' \
+        -e 's:@@alt_name@@:'"rootca.com"':' \
         "$root_ini"
 
     cp "$ca_ini_template" "$sub_ini"
@@ -106,8 +108,10 @@ populate_templates() {
         -e 's:@@name@@:'"$sub_name"':' \
         -e 's:@@home@@:'"$sub_ca_dir"':' \
         -e 's:@@ocsp_portnum@@:'"9081"':' \
+        -e 's:@@req_extensions@@:'"sub_ca_ext"':' \
         -e 's:@@copy_extensions@@:'"copy"':' \
         -e 's:@@default_crl_days@@:'"30"':' \
+        -e 's:@@alt_name@@:'"subca.com"':' \
         "$sub_ini"
 }
 
