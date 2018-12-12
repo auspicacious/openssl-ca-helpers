@@ -49,21 +49,25 @@ trap_exit() {
         errmsg 'Exit status was: '"$exit_status"
     fi
 }
-trap EXIT trap_exit
+trap trap_exit EXIT
 
 create_root_ca_csr() {
     openssl req \
             -new \
+            -subj / \
             -config "$root_ini" \
             -out "$root_ca_csr" \
+            -passout 'pass:asdf' \
             -keyout "$root_private_key"
 }
 
 create_sub_ca_csr() {
     openssl req \
             -new \
+            -subj / \
             -config "$sub_ini" \
             -out "$sub_ca_csr" \
+            -passout 'pass:asdf' \
             -keyout "$sub_private_key"
 }
 
@@ -73,6 +77,7 @@ self_sign_root_ca() {
             -config "$root_ini" \
             -in "$root_ca_csr" \
             -out "$root_cert" \
+            -passin 'pass:asdf' \
             -extensions ca_ext
 }
 
@@ -88,6 +93,7 @@ sign_sub_ca() {
             -config "$root_ini" \
             -in "$sub_ca_csr" \
             -out "$sub_cert" \
+            -passin 'pass:asdf' \
             -extensions sub_ca_ext
 }
 
