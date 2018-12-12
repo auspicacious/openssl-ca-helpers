@@ -30,7 +30,7 @@ sub_db_dir="$sub_ca_dir"/db
 sub_private_dir="$sub_ca_dir"/private
 
 sub_private_key="$sub_private_dir"/"$sub_name".key
-vsub_cert="$sub_certs_dir"/"$sub_name".crt
+sub_cert="$sub_certs_dir"/"$sub_name".crt
 sub_ini="$sub_ca_dir"/sub-ca.ini
 
 root_ca_csr="$(mktemp rootcsr.XXXXXX)"
