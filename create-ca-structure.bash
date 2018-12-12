@@ -106,7 +106,8 @@ populate_templates() {
         -e 's:@@req_extensions@@:'"ca_ext"':' \
         -e 's:@@copy_extensions@@:'"none"':' \
         -e 's:@@default_crl_days@@:'"365"':' \
-        -e 's:@@alt_name@@:'"rootca.com"':' \
+        -e 's:@@root_alt_name@@:'"rootca.com"':' \
+        -e 's:@@sub_alt_name@@:'"subca.com"':' \
         "$root_ini"
 
     cp "$ca_ini_template" "$sub_ini"
@@ -117,7 +118,8 @@ populate_templates() {
         -e 's:@@req_extensions@@:'"sub_ca_ext"':' \
         -e 's:@@copy_extensions@@:'"copy"':' \
         -e 's:@@default_crl_days@@:'"30"':' \
-        -e 's:@@alt_name@@:'"subca.com"':' \
+        -e 's:@@root_alt_name@@:'"rootca.com"':' \
+        -e 's:@@sub_alt_name@@:'"subca.com"':' \
         "$sub_ini"
 }
 
