@@ -7,7 +7,12 @@ set -o xtrace
 
 # Reference https://www.feistyduck.com/library/openssl-cookbook/
 
+root_name="akmanrootca1"
+sub_name="akmansubca1"
+
 base_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd -P )"
+root_ini_template="$base_dir"/root-ca.template.ini
+sub_ini_template="$base_dir"/sub-ca.template.ini
 
 out_dir="$base_dir"/out
 
@@ -16,18 +21,18 @@ root_certs_dir="$root_ca_dir"/certs
 root_db_dir="$root_ca_dir"/db
 root_private_dir="$root_ca_dir"/private
 
-root_private_key="$root_private_dir"/root-ca.key
-root_cert="$root_certs_dir"/root-ca.crt
-root_ini="$base_dir"/root-ca.ini
+root_private_key="$root_private_dir"/"$root_name".key
+root_cert="$root_certs_dir"/"$root_name".crt
+root_ini="$root_ca_dir"/root-ca.ini
 
 sub_ca_dir="$out_dir"/sub-ca
 sub_certs_dir="$sub_ca_dir"/certs
 sub_db_dir="$sub_ca_dir"/db
 sub_private_dir="$sub_ca_dir"/private
 
-sub_private_key="$sub_private_dir"/sub-ca.key
-sub_cert="$sub_certs_dir"/sub-ca.crt
-sub_ini="$base_dir"/sub-ca.ini
+sub_private_key="$sub_private_dir"/"$sub_name".key
+sub_cert="$sub_certs_dir"/"$sub_name".crt
+sub_ini="$sub_ca_dir"/sub-ca.ini
 
 root_ca_csr="$(mktemp rootcsr.XXXXXX)"
 sub_ca_csr="$(mktemp subcsr.XXXXXX)"
@@ -87,6 +92,13 @@ sign_sub_ca() {
             -extensions sub_ca_ext
 }
 
+populate_templates() {
+    cp "$root_ca_template" "$root_ini"
+    sed --in-place \
+        -e 's:@@home@@:'"$out_dir"':' \
+        "$root_ini"
+}
+
 make_ca_dirs() {
     mkdir \
         "$out_dir" \
@@ -108,6 +120,7 @@ make_ca_dirs() {
 }
 
 make_ca_dirs
+populate_templates
 create_root_ca_csr
 self_sign_root_ca
 create_sub_ca_csr
