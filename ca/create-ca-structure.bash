@@ -1,45 +1,11 @@
 #!/usr/bin/env bash
 
-set -o errexit
-set -o nounset
-set -o pipefail
-set -o xtrace
-
-# Reference https://www.feistyduck.com/library/openssl-cookbook/
-
-root_name="akmanrootca1"
-sub_name="akmansubca1"
-
 base_dir="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd -P )"
-ca_ini_template="$base_dir"/ca.template.ini
 
-out_dir="$base_dir"/out
-
-root_ca_dir="$out_dir"/root-ca
-root_certs_dir="$root_ca_dir"/certs
-root_db_dir="$root_ca_dir"/db
-root_private_dir="$root_ca_dir"/private
-
-root_private_key="$root_private_dir"/"$root_name".key
-root_cert="$root_certs_dir"/"$root_name".crt
-root_ini="$root_ca_dir"/root-ca.ini
-
-sub_ca_dir="$out_dir"/sub-ca
-sub_certs_dir="$sub_ca_dir"/certs
-sub_db_dir="$sub_ca_dir"/db
-sub_private_dir="$sub_ca_dir"/private
-
-sub_private_key="$sub_private_dir"/"$sub_name".key
-sub_cert="$sub_certs_dir"/"$sub_name".crt
-sub_ini="$sub_ca_dir"/sub-ca.ini
+source "$base_dir"/common.bash
 
 root_ca_csr="$(mktemp rootcsr.XXXXXX)"
 sub_ca_csr="$(mktemp subcsr.XXXXXX)"
-
-errmsg() {
-    local IFS=' '
-    printf '%s\n' "$*" 1>&2
-}
 
 trap_exit() {
     exit_status="$?"
@@ -108,6 +74,7 @@ populate_templates() {
         -e 's:@@default_crl_days@@:'"365"':' \
         -e 's:@@root_alt_name@@:'"rootca.com"':' \
         -e 's:@@sub_alt_name@@:'"subca.com"':' \
+        -e 's:@@client_alt_name@@:'"client.com"':' \
         "$root_ini"
 
     cp "$ca_ini_template" "$sub_ini"
@@ -120,6 +87,7 @@ populate_templates() {
         -e 's:@@default_crl_days@@:'"30"':' \
         -e 's:@@root_alt_name@@:'"rootca.com"':' \
         -e 's:@@sub_alt_name@@:'"subca.com"':' \
+        -e 's:@@client_alt_name@@:'"client.com"':' \
         "$sub_ini"
 }
 
