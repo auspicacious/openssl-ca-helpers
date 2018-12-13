@@ -35,6 +35,7 @@ sub_ini="$sub_ca_dir"/sub-ca.ini
 
 client_private_key="$sub_private_dir"/"$client_name".key
 client_cert="$sub_certs_dir"/"$client_name".crt
+client_ini="$sub_ca_dir"/client-ca.ini
 
 errmsg() {
     local IFS=' '

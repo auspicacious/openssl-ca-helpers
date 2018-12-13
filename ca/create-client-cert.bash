@@ -26,7 +26,7 @@ create_csr() {
     openssl req \
             -new \
             -subj / \
-            -config "$sub_ini" \
+            -config "$client_ini" \
             -out "$client_csr" \
             -passout 'pass:asdf' \
             -keyout "$client_private_key"
@@ -38,7 +38,7 @@ sign_csr() {
             -in "$client_csr" \
             -out "$client_cert" \
             -passin 'pass:asdf' \
-            -extensions client_ca_ext
+            -extensions client_ext
 }
 
 create_csr
