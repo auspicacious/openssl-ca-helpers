@@ -74,9 +74,9 @@ populate_templates() {
         -e 's:@@req_extensions@@:'"ca_ext"':' \
         -e 's:@@copy_extensions@@:'"none"':' \
         -e 's:@@default_crl_days@@:'"365"':' \
-        -e 's:@@root_alt_name@@:'"rootca.com"':' \
-        -e 's:@@sub_alt_name@@:'"subca.com"':' \
-        -e 's:@@client_alt_name@@:'"client.com"':' \
+        -e 's:@@root_alt_name@@:'"akmanrootca1@akman.auspicacious.org"':' \
+        -e 's:@@sub_alt_name@@:'"akmansubca1@akman.auspicacious.org"':' \
+        -e 's:@@client_alt_name@@:'"akmanclient1@akman.auspicacious.org"':' \
         -e 's:@@rand_serial@@:'""':' \
         "$root_ini"
 
@@ -87,10 +87,10 @@ populate_templates() {
         -e 's:@@ocsp_portnum@@:'"9081"':' \
         -e 's:@@req_extensions@@:'"sub_ca_ext"':' \
         -e 's:@@copy_extensions@@:'"copy"':' \
+        -e 's:@@root_alt_name@@:'"akmanrootca1@akman.auspicacious.org"':' \
+        -e 's:@@sub_alt_name@@:'"akmansubca1@akman.auspicacious.org"':' \
+        -e 's:@@client_alt_name@@:'"akmanclient1@akman.auspicacious.org"':' \
         -e 's:@@default_crl_days@@:'"30"':' \
-        -e 's:@@root_alt_name@@:'"rootca.com"':' \
-        -e 's:@@sub_alt_name@@:'"subca.com"':' \
-        -e 's:@@client_alt_name@@:'"client.com"':' \
         -e 's:@@rand_serial@@:'""':' \
         "$sub_ini"
 
@@ -101,10 +101,10 @@ populate_templates() {
         -e 's:@@ocsp_portnum@@:'"9081"':' \
         -e 's:@@req_extensions@@:'"sub_ca_ext"':' \
         -e 's:@@copy_extensions@@:'"copy"':' \
+        -e 's:@@root_alt_name@@:'"akmanrootca1@akman.auspicacious.org"':' \
+        -e 's:@@sub_alt_name@@:'"akmansubca1@akman.auspicacious.org"':' \
+        -e 's:@@client_alt_name@@:'"akmanclient1@akman.auspicacious.org"':' \
         -e 's:@@default_crl_days@@:'"30"':' \
-        -e 's:@@root_alt_name@@:'"rootca.com"':' \
-        -e 's:@@sub_alt_name@@:'"subca.com"':' \
-        -e 's:@@client_alt_name@@:'"client.com"':' \
         -e 's:@@rand_serial@@:'"rand_serial = no"':' \
         "$client_ini"
 }
