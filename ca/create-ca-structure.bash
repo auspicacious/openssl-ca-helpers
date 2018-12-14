@@ -39,6 +39,7 @@ create_sub_ca_csr() {
 
 self_sign_root_ca() {
     openssl ca \
+            -batch \
             -selfsign \
             -config "$root_ini" \
             -in "$root_ca_csr" \
@@ -56,6 +57,7 @@ generate_crl() {
 
 sign_sub_ca() {
     openssl ca \
+            -batch \
             -config "$root_ini" \
             -in "$sub_ca_csr" \
             -out "$sub_cert" \

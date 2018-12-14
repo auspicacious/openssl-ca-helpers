@@ -34,6 +34,7 @@ create_csr() {
 
 sign_csr() {
     openssl ca \
+            -batch \
             -config "$sub_ini" \
             -in "$client_csr" \
             -out "$client_cert" \

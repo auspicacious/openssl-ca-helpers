@@ -9,7 +9,7 @@ set -o xtrace
 
 root_name="akmanrootca1"
 sub_name="akmansubca1"
-client_name=client_name="akmanclient1"
+client_name="akmanclient1"
 
 ca_ini_template="$base_dir"/ca.template.ini
 
